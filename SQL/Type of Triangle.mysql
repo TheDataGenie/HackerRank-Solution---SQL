@@ -1,10 +1,9 @@
 # Write a query identifying the type of each record in the TRIANGLES table using its three side lengths.
 
 
-select case
-when A+B <= C or A+C <= B or B+C <= A then "Not A Triangle"
-when A=B and B=C then "Equilateral"
-when A=B or A=C or B=C then "Isosceles"
-else "Scalene"
-end as triangles_type
-from TRIANGLES;
+SELECT     CASE WHEN A+B <= C OR A+C <= B OR B+C <= A THEN "Not A Triangle"
+                WHEN A=B AND B=C THEN "Equilateral"
+                WHEN A=B OR A=C OR B=C THEN "Isosceles"
+                ELSE "Scalene"
+           END AS triangles_type
+FROM       TRIANGLES;
