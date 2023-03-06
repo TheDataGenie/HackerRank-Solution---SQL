@@ -2,5 +2,8 @@
 # Write a query to print the pattern P(20).
 
 
-set @number = 21;
-select repeat('* ', @number := @number - 1) from information_schema.tables;
+SET    @number = 21;
+
+SELECT repeat('* ', @number := @number - 1)
+FROM   information_schema.tables
+;
