@@ -1,0 +1,45 @@
+# Write a query to print the company_code, founder name, total number of lead managers, total number of senior managers, total number of managers, and total number of employees.
+# Order your output by ascending company_code.
+
+
+# Solution
+
+SELECT      c.company_code
+        ,   c.founder
+        ,   COUNT(DISTINCT lm.lead_manager_code) AS total_lm
+        ,   COUNT(DISTINCT sm.senior_manager_code) AS total_sm
+        ,   COUNT(DISTINCT m.manager_code) AS total_sm
+        ,   COUNT(DISTINCT e.employee_code) AS total_emp
+
+FROM        Company c
+
+JOIN        Lead_Manager lm
+ON          c.company_code = lm.company_code
+
+JOIN        Senior_Manager sm
+ON          lm.company_code = sm.company_code
+
+JOIN        Manager m
+ON          sm.company_code = m.company_code
+
+JOIN        Employee e
+ON          m.company_code = e.company_code
+
+GROUP BY    c.company_code
+        ,   founder
+
+ORDER BY    c.company_code ASC
+;
+
+
+# Alternate Way
+
+SELECT c.company_code, c.founder, 
+       COUNT(DISTINCT l.lead_manager_code), COUNT(DISTINCT s.senior_manager_code),
+       COUNT(DISTINCT m.manager_code), COUNT(DISTINCT e.employee_code)
+FROM Company c, Lead_Manager l, Senior_Manager s, Manager m, Employee e
+WHERE c.company_code = l.company_code AND 
+      l.lead_manager_code = s.lead_manager_code AND
+      s.senior_manager_code = m.senior_manager_code AND
+      m.manager_code = e.manager_code
+GROUP BY c.company_code, c.founder ORDER BY c.company_code;
